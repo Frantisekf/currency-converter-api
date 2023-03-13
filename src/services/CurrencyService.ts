@@ -1,0 +1,28 @@
+import { CURRENCIES } from '../helpers/currencies'
+import ConvertedCurrencyModel from '../models/Converter'
+import { convert } from '../helpers/utils'
+
+// could be substituted with a use of a different API for currency symbols
+// reason for this service is to fetch in on the frontend and display supported currencies
+// by the fixer currency rates API
+const getAllCurrencySymbolsAndNames = (): any => {
+  return CURRENCIES
+}
+
+const convertCurrency = async (amount: number, from: string, to: string): Promise<any> => {
+  const convertedAmount = await convert(amount, from, to)
+  return await ConvertedCurrencyModel.create({
+    originalAmount: amount,
+    destAmount: convertedAmount.getAmount(),
+    from,
+    to
+  })
+}
+
+const getAllConvertedResults = async (): Promise<any> => {
+  return await ConvertedCurrencyModel.find()
+}
+
+// make a function to get all the amounts from the DB and calculate their sum in USD
+
+export { convertCurrency, getAllCurrencySymbolsAndNames, getAllConvertedResults }
