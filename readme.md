@@ -8,9 +8,6 @@ secrets & constants
 proper error handling and err messages
 rate limit setup
 
-frontend will first load currency symbols
-past conversion entries from the database
-
 ### STRUCTURE
 
 routes:

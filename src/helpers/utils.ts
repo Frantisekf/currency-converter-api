@@ -28,6 +28,8 @@ export const convert = async (amount: number, from: string, to: string): Promise
     }
   }
   try {
+    // rates API result should be cached and should not run on every request (e.g. but only once per day)
+    // this may result in inaccurate values as rates are constantly moving
     const getRates = await fetch(`https://api.apilayer.com/fixer/latest?base=${from}&symbols=${to}`, options)
     const ratesData = await getRates.json()
     if (!isRatesResponseData(ratesData)) {
