@@ -15,7 +15,7 @@
     "declaration": true,
     "typeRoots": ["./node_modules/@types", "./src/global"]
   },
-  "exclude": ["node_modules", "webpack.config.js", "src/tests/**/*.ts"],
+  "exclude": ["node_modules", "webpack.config.js", "tests/**/*.ts"],
   "ts-node": {
     "esm": true,
     "experimentalSpecifierResolution": "node"
