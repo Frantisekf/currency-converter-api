@@ -1,14 +1,12 @@
 import Dinero from 'dinero.js'
 import fetch from 'node-fetch'
+import { type RatesResponseData } from '../global/types'
+import { type MoneyType } from 'src/global/types'
+import * as dotenv from 'dotenv'
 
-const FIXER_API_KEY = 'zID0JkMYYRXMz8HLVVgKn9gJvyjwBcqR'
+dotenv.config()
 
-interface RatesResponseData {
-  success: boolean
-  timestamp: number
-  base: string
-  rates: Record<string, number>
-}
+const FIXER_API_KEY = String(process.env.FIXER_API_KEY)
 
 // type guard function for the rates fetch call
 const isRatesResponseData = (data: unknown): data is RatesResponseData => {
@@ -21,7 +19,8 @@ const isRatesResponseData = (data: unknown): data is RatesResponseData => {
   )
 }
 
-export const convert = async (amount: number, from: string, to: string): Promise<Dinero> => {
+export const convert = async (Money: MoneyType): Promise<Dinero> => {
+  const { amount, from, to } = Money
   const options = {
     headers: {
       apikey: FIXER_API_KEY
@@ -30,7 +29,8 @@ export const convert = async (amount: number, from: string, to: string): Promise
   try {
     // rates API result should be cached and should not run on every request (e.g. but only once per day)
     // this may result in inaccurate values as rates are constantly moving
-    const getRates = await fetch(`https://api.apilayer.com/fixer/latest?base=${from}&symbols=${to}`, options)
+    console.log(FIXER_API_KEY)
+    const getRates = await fetch(`${process.env.FIXER_BASE_URL}/latest?base=${from}&symbols=${to}`, options)
     const ratesData = await getRates.json()
     if (!isRatesResponseData(ratesData)) {
       throw new Error('Failed to get conversion rate.')

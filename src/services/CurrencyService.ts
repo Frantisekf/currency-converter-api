@@ -1,6 +1,7 @@
 import { CURRENCIES } from '../helpers/currencies'
 import ConvertedCurrencyModel from '../models/Converter'
 import { convert } from '../helpers/utils'
+import { type MoneyType } from 'src/global/types'
 
 // could be substituted with a use of a different API for currency symbols
 // reason for this service is to fetch in on the frontend and display supported currencies
@@ -9,8 +10,9 @@ const getAllCurrencySymbolsAndNames = (): any => {
   return CURRENCIES
 }
 
-const convertCurrency = async (amount: number, from: string, to: string): Promise<any> => {
-  const convertedAmount = await convert(amount, from, to)
+const convertCurrency = async (Money: MoneyType): Promise<any> => {
+  const { amount, from, to } = Money
+  const convertedAmount = await convert(Money)
   return await ConvertedCurrencyModel.create({
     originalAmount: amount,
     destAmount: convertedAmount.getAmount(),

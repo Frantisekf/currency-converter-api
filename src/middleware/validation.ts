@@ -10,17 +10,23 @@ export const requireJsonContent = (request: Request, response: Response, next: N
 }
 
 export const inputToConvertSchema = z.object({
-  body: z.object({
-    amount: z.number({
-      required_error: 'Amount is required'
-    }),
-    from: z.string({
-      required_error: 'currency to convert from is required'
-    }).max(3),
-    to: z.string({
-      required_error: 'currency to convert to is required'
-    }).max(3)
-  })
+  body: z
+    .object({
+      amount: z.number({
+        required_error: 'Amount is required'
+      }),
+      from: z
+        .string({
+          required_error: 'currency to convert from is required'
+        })
+        .max(3),
+      to: z
+        .string({
+          required_error: 'currency to convert to is required'
+        })
+        .max(3)
+    })
+    .strict()
 })
 
 export const validateInput = (schema: AnyZodObject) => async (req: Request, res: Response, next: NextFunction) => {

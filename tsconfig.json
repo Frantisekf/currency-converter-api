@@ -11,11 +11,13 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
-    "module": "commonjs",
-    "declaration": true
+    "module": "ES6",
+    "declaration": true,
+    "typeRoots": ["./node_modules/@types", "./src/global"]
   },
   "exclude": ["node_modules", "webpack.config.js", "src/tests/**/*.ts"],
   "ts-node": {
-    "esm": true
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
   }
 }

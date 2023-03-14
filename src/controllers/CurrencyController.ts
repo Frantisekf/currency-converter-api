@@ -13,7 +13,7 @@ const getAllCurrencySymbolsController = async (req: Request, res: Response): Pro
 const convertCurrencyController = async (req: Request, res: Response): Promise<void> => {
   try {
     const { amount, from, to } = await req.body
-    const convertInput = await convertCurrency(amount, from, to)
+    const convertInput = await convertCurrency({ amount, from, to })
     res.json({ data: convertInput, status: 'success' })
   } catch (err: any) {
     res.status(500).json({ error: err.message })

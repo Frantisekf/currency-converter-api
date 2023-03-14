@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { type DataToConvert } from '../global/types'
 const Schema = mongoose.Schema
 
 const convertedCurrency = new Schema<DataToConvert>({
@@ -11,18 +12,6 @@ const convertedCurrency = new Schema<DataToConvert>({
     default: Date.now
   }
 })
-
-export interface DataToConvert {
-  originalAmount: string
-  destAmount: string
-  rate?: string
-  from: string
-  to: string
-  createdAt: {
-    type: Date
-    default: Date
-  }
-}
 
 const ConvertedCurrencyModel = mongoose.model('convertedCurrency', convertedCurrency)
 
