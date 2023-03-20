@@ -16,7 +16,8 @@
     "test:watch": "jest --watch",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "format": "npx prettier --write ."
+    "format": "npx prettier --write .",
+    "prepare": "husky install"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -60,14 +61,11 @@
     "webpack-cli": "^5.0.1",
     "winston": "^3.8.2"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick && lint-staged"
-    }
-  },
   "lint-staged": {
     "*.ts": [
       "./node_modules/.bin/eslint — fix”, “git add"
-    ]
+    ],
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }

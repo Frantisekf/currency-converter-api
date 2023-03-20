@@ -24,3 +24,5 @@
 {"level":"info","message":"Server listening on port 3001","timestamp":"2023-03-20 17:37:31:3731"}
 {"level":"info","message":"Connected to MongoDB Atlas","timestamp":"2023-03-20 17:44:38:4438"}
 {"level":"info","message":"Server listening on port 3001","timestamp":"2023-03-20 17:44:38:4438"}
+{"level":"info","message":"Connected to MongoDB Atlas","timestamp":"2023-03-20 17:46:04:464"}
+{"level":"info","message":"Server listening on port 3001","timestamp":"2023-03-20 17:46:04:464"}
