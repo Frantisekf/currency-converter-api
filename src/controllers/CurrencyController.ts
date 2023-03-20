@@ -1,4 +1,5 @@
 import { type Request, type Response } from 'express'
+import { formatCurrency } from '../helpers/utils'
 import { convertCurrency, getAllCurrencySymbolsAndNames, getAllConvertedResults } from '../services/CurrencyService'
 
 const getAllCurrencySymbolsController = async (req: Request, res: Response): Promise<void> => {
@@ -14,16 +15,35 @@ const convertCurrencyController = async (req: Request, res: Response): Promise<v
   try {
     const { amount, from, to } = await req.body
     const convertInput = await convertCurrency({ amount, from, to })
-    res.json({ data: convertInput, status: 'success' })
+    res.json({
+      data: {
+        originalAmount: formatCurrency(convertInput.originalAmount, from),
+        destAmount: formatCurrency(convertInput.destAmount, to),
+        from: convertInput.from,
+        to: convertInput.to
+      },
+      status: 'success'
+    })
   } catch (err: any) {
     res.status(500).json({ error: err.message })
   }
 }
 
+// Add full currency name to response
 const getAllConvertedValuesController = async (req: Request, res: Response): Promise<void> => {
   try {
     const allConvertedValues = await getAllConvertedResults()
-    res.json({ data: allConvertedValues, status: 'success' })
+    const transformConvertedValuesResponse = allConvertedValues.map((element) => ({
+      from: element.from,
+      to: element.to,
+      originalAmount: formatCurrency(element.originalAmount, element.from),
+      destAmount: formatCurrency(element.destAmount, element.to),
+      createdAt: element.createdAt
+    }))
+    res.json({
+      data: transformConvertedValuesResponse,
+      status: 'success'
+    })
   } catch (err: any) {
     res.status(500).json({ error: err.message })
   }

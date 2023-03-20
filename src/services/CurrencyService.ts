@@ -1,6 +1,6 @@
 import { CURRENCIES } from '../helpers/currencies'
 import ConvertedCurrencyModel from '../models/Converter'
-import { convert } from '../helpers/utils'
+import { convert } from '../helpers/convert'
 import { type MoneyType } from 'src/global/types'
 
 // could be substituted with a use of a different API for currency symbols
@@ -15,7 +15,7 @@ const convertCurrency = async (Money: MoneyType): Promise<any> => {
   const convertedAmount = await convert(Money)
   return await ConvertedCurrencyModel.create({
     originalAmount: amount,
-    destAmount: convertedAmount.getAmount(),
+    destAmount: convertedAmount,
     from,
     to
   })

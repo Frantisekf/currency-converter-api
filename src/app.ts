@@ -1,24 +1,22 @@
-import * as dotenv from 'dotenv'
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import currencyRouter from './routes/CurrencyRouter'
 import { limiter } from './middleware/rateLimit'
-dotenv.config()
-
-const DB_PASSWORD = process.env.DB_PASSWORD
-
-const uri = `mongodb+srv://frantisekf:${DB_PASSWORD}@cluster0.zrvplni.mongodb.net/?retryWrites=true&w=majority`
+import { DB_URL, SERVER_PORT } from './helpers/constants'
+import baseLogger from './helpers/baseLogger'
 
 const app = express()
 
 try {
-  void mongoose.connect(uri)
-  console.log('Connected to MongoDB Atlas')
+  void mongoose.connect(DB_URL)
+  baseLogger.info('Connected to MongoDB Atlas')
 } catch (err: any) {
-  console.log(err)
+  baseLogger.error(err.message)
   throw new Error(err.message)
 }
+
+export let cachedCurrrentRates: any
 
 app.use(cors())
 app.use(express.json())
@@ -31,8 +29,8 @@ app.use(
 
 app.use('/api', currencyRouter)
 
-app.listen(process.env.SERVER_PORT, () => {
-  console.log(`server running on port ${process.env.SERVER_PORT}`)
+app.listen(SERVER_PORT, () => {
+  baseLogger.info(`Server listening on port ${process.env.SERVER_PORT}`)
 })
 
 export default app

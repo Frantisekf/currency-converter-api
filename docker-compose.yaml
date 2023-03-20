@@ -1,0 +1,17 @@
+version: '3'
+services:
+  converter:
+    environment:
+      - NODE_ENV=development
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/usr/app
+    container_name: currency-converter-api
+    expose:
+      - 3001
+    ports:
+      - 3001:3001
+    command: npm run start:dev
