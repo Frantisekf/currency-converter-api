@@ -62,9 +62,6 @@
     "winston": "^3.8.2"
   },
   "lint-staged": {
-    "*.ts": [
-      "./node_modules/.bin/eslint — fix”, “git add"
-    ],
     "*.ts": "eslint --cache --fix",
     "*.{ts,css,md}": "prettier --write"
   }
