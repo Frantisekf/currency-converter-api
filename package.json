@@ -65,7 +65,7 @@
     "*.ts": [
       "./node_modules/.bin/eslint — fix”, “git add"
     ],
-    "*.js": "eslint --cache --fix",
-    "*.{js,css,md}": "prettier --write"
+    "*.ts": "eslint --cache --fix",
+    "*.{ts,css,md}": "prettier --write"
   }
 }
